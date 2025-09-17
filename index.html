@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>RF frequency ↔ Band/Channel Calculator</title>
+    <title>Freq ↔ Band/Chan Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,18 +13,47 @@
 
         section {
             margin-bottom: 40px;
+            max-width: 480px;
         }
 
-        .result {
-            margin-top: 10px;
-            font-weight: bold;
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            align-items: center;
+            gap: 10px 15px;
+            margin-bottom: 15px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
         }
 
         input,
-        select,
-        button {
-            padding: 5px;
+        select {
+            padding: 6px 8px;
             font-size: 1em;
+            width: 100%;
+            max-width: 200px;
+            box-sizing: border-box;
+        }
+
+
+        button {
+            padding: 7px 14px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 1.2em;
         }
     </style>
 </head>
@@ -33,42 +62,66 @@
 
     <section>
         <h2>1. Frequency → Band/Channel</h2>
-        <label for="testTypeSelect">Test Type:</label>
-        <select id="testTypeSelect">
-            <option value="bt">Bluetooth</option>
-            <option value="wifi" disabled>WiFi</option>
-        </select><br><br>
+        <div class="form-row">
+            <label for="testTypeSelect">Test Type:</label>
+            <select id="testTypeSelect">
+                <option value="bt">Bluetooth</option>
+                <option value="wifi" disabled>WiFi</option>
+            </select>
+        </div>
 
-        <label for="standardSelect">Standard:</label>
-        <select id="standardSelect">
-            <option value="DH5">DH5 (BT)...</option>
-            <option value="BLE">BLE</option>
-        </select><br><br>
+        <div class="form-row">
+            <label for="standardSelect">Standard:</label>
+            <select id="standardSelect">
+                <option value="DH5">DH5 (BT)...</option>
+                <option value="BLE">BLE</option>
+            </select>
+        </div>
 
-        <input type="number" id="freqInput" placeholder="Frequency (MHz)" />
-        <button onclick="calculateFromFreq()">Calculate</button>
+        <div class="form-row">
+            <label for="freqInput">Frequency (MHz):</label>
+            <input type="number" id="freqInput" placeholder="Frequency (MHz)" />
+        </div>
+
+        <div class="button-row">
+            <button onclick="calculateFromFreq()">Calculate</button>
+        </div>
+
         <div id="freqResult" class="result"></div>
     </section>
 
     <section>
         <h2>2. Band/Channel → Frequency</h2>
-        <label for="testTypeSelect2">Test Type:</label>
-        <select id="testTypeSelect2">
-            <option value="bt">Bluetooth</option>
-            <option value="wifi" disabled>WiFi</option>
-        </select><br><br>
+        <div class="form-row">
+            <label for="testTypeSelect2">Test Type:</label>
+            <select id="testTypeSelect2">
+                <option value="bt">Bluetooth</option>
+                <option value="wifi" disabled>WiFi</option>
+            </select>
+        </div>
 
-        <label for="standardSelect2">Standard:</label>
-        <select id="standardSelect2">
-            <option value="DH5">DH5 (BT)...</option>
-            <option value="BLE">BLE</option>
-        </select><br><br>
+        <div class="form-row">
+            <label for="standardSelect2">Standard:</label>
+            <select id="standardSelect2">
+                <option value="DH5">DH5 (BT)...</option>
+                <option value="BLE">BLE</option>
+            </select>
+        </div>
 
-        <label for="bandInput">Band:</label>
-        <input type="text" id="bandInput" placeholder="Ex: 0,1,2,4,5,6,7" /><br><br>
+        <div class="form-row">
+            <label for="bandInput">Band:</label>
+            <input type="text" id="bandInput" placeholder="Ex: 0,1,2,4,5,6,7" />
+        </div>
 
-        <input type="number" id="channelInput" placeholder="Channel Number" />
-        <button onclick="calculateFromChannel()">Calculate</button>
+        <div class="form-row">
+            <label for="channelInput">Channel:</label>
+            <input type="number" id="channelInput" placeholder="Channel Number" />
+        </div>
+
+        <div class="button-row">
+            <button onclick="calculateFromChannel()">Calculate</button>
+        </div>
+
         <div id="channelResult" class="result"></div>
     </section>
 
@@ -210,9 +263,7 @@
                 document.getElementById('channelResult').innerText = `❌ Error: ${e.message}`;
             }
         }
-
     </script>
-
 </body>
 
 </html>
