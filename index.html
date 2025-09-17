@@ -25,7 +25,7 @@
 
         h2 {
             font: sans-serif;
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: bold;
             margin-bottom: 20px;
             color: #333;
@@ -33,7 +33,7 @@
 
         .form-row {
             display: grid;
-            grid-template-columns: 120px 1fr;
+            grid-template-columns: 120px 1fr auto;
             align-items: center;
             gap: 10px 15px;
             margin-bottom: 15px;
@@ -99,9 +99,6 @@
         <div class="form-row">
             <label for="freqInput">Frequency (MHz):</label>
             <input type="number" id="freqInput" placeholder="Frequency (MHz)" />
-        </div>
-
-        <div class="button-row">
             <button onclick="calculateFromFreq()">Calculate</button>
         </div>
 
@@ -134,9 +131,6 @@
         <div class="form-row">
             <label for="channelInput">Channel:</label>
             <input type="number" id="channelInput" placeholder="Channel Number" />
-        </div>
-
-        <div class="button-row">
             <button onclick="calculateFromChannel()">Calculate</button>
         </div>
 
@@ -285,6 +279,12 @@
         document.getElementById("freqInput").addEventListener("keydown", function (e) {
             if (e.key === "Enter") {
                 calculateFromFreq();
+            }
+        });
+
+        document.getElementById("bandInput").addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                calculateFromChannel();
             }
         });
 
