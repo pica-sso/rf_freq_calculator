@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>주파수 ↔ 밴드/채널 계산기</title>
+    <title>RF frequency ↔ Band/Channel Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,49 +32,47 @@
 <body>
 
     <section>
-        <h2>1. 주파수 → 밴드/채널</h2>
-        <label for="testTypeSelect">테스트 타입:</label>
+        <h2>1. Frequency → Band/Channel</h2>
+        <label for="testTypeSelect">Test Type:</label>
         <select id="testTypeSelect">
             <option value="bt">Bluetooth</option>
-            <option value="wifi">WiFi</option>
+            <option value="wifi" disabled>WiFi</option>
         </select><br><br>
 
-        <label for="standardSelect">표준:</label>
+        <label for="standardSelect">Standard:</label>
         <select id="standardSelect">
-            <option value="DH5">DH5 (BT)</option>
+            <option value="DH5">DH5 (BT)...</option>
             <option value="BLE">BLE</option>
         </select><br><br>
 
-        <input type="number" id="freqInput" placeholder="주파수 (MHz)" />
-        <button onclick="calculateFromFreq()">계산</button>
+        <input type="number" id="freqInput" placeholder="Frequency (MHz)" />
+        <button onclick="calculateFromFreq()">Calculate</button>
         <div id="freqResult" class="result"></div>
     </section>
 
     <section>
-        <h2>2. 밴드/채널 → 주파수</h2>
-        <label for="testTypeSelect2">테스트 타입:</label>
+        <h2>2. Band/Channel → Frequency</h2>
+        <label for="testTypeSelect2">Test Type:</label>
         <select id="testTypeSelect2">
             <option value="bt">Bluetooth</option>
-            <option value="wifi">WiFi</option>
+            <option value="wifi" disabled>WiFi</option>
         </select><br><br>
 
-        <label for="standardSelect2">표준:</label>
+        <label for="standardSelect2">Standard:</label>
         <select id="standardSelect2">
-            <option value="DH5">DH5 (BT)</option>
+            <option value="DH5">DH5 (BT)...</option>
             <option value="BLE">BLE</option>
         </select><br><br>
 
-        <label for="bandInput">밴드:</label>
-        <input type="text" id="bandInput" placeholder="예: 0,1,2,4,5,6,7 또는 2.4,5,6" /><br><br>
+        <label for="bandInput">Band:</label>
+        <input type="text" id="bandInput" placeholder="Ex: 0,1,2,4,5,6,7" /><br><br>
 
-        <input type="number" id="channelInput" placeholder="채널 번호" />
-        <button onclick="calculateFromChannel()">계산</button>
+        <input type="number" id="channelInput" placeholder="Channel Number" />
+        <button onclick="calculateFromChannel()">Calculate</button>
         <div id="channelResult" class="result"></div>
     </section>
 
     <script>
-        // === JS 함수 ===
-
         function calculateFreq(testType, band, channel, standard = null) {
             let freq = -1;
             let bw = (standard !== 'BLE') ? 1 : 2;
@@ -162,25 +160,25 @@
             const freqStr = document.getElementById('freqInput').value;
 
             if (!freqStr) {
-                document.getElementById('freqResult').innerText = '❌ 주파수를 입력하세요.';
+                document.getElementById('freqResult').innerText = '❌ Please enter a frequency.';
                 return;
             }
 
             const freq = parseInt(freqStr);
             if (isNaN(freq)) {
-                document.getElementById('freqResult').innerText = '❌ 유효한 숫자를 입력하세요.';
+                document.getElementById('freqResult').innerText = '❌ Please enter a valid number.';
                 return;
             }
 
             try {
                 const { band, ch } = calculateBandCh(testType, freq, standard);
                 if (band === -1 || ch === -1) {
-                    document.getElementById('freqResult').innerText = `❌ 유효하지 않은 주파수입니다.`;
+                    document.getElementById('freqResult').innerText = `❌ Please enter a valid frequency.`;
                 } else {
                     document.getElementById('freqResult').innerText = `📶 Band: ${band}, Channel: ${ch}`;
                 }
             } catch (e) {
-                document.getElementById('freqResult').innerText = `❌ 오류: ${e.message}`;
+                document.getElementById('freqResult').innerText = `❌ Error: ${e.message}`;
             }
         }
 
@@ -191,25 +189,25 @@
             const chStr = document.getElementById('channelInput').value;
 
             if (!band) {
-                document.getElementById('channelResult').innerText = '❌ 밴드를 입력하세요.';
+                document.getElementById('channelResult').innerText = '❌ Please enter a band.';
                 return;
             }
             if (!chStr) {
-                document.getElementById('channelResult').innerText = '❌ 채널을 입력하세요.';
+                document.getElementById('channelResult').innerText = '❌ Please enter a channel.';
                 return;
             }
 
             const ch = parseInt(chStr);
             if (isNaN(ch)) {
-                document.getElementById('channelResult').innerText = '❌ 유효한 채널 번호를 입력하세요.';
+                document.getElementById('channelResult').innerText = '❌ Please enter a valid channel number.';
                 return;
             }
 
             try {
                 const freq = calculateFreq(testType, band, ch, standard);
-                document.getElementById('channelResult').innerText = `📡 주파수: ${freq} MHz`;
+                document.getElementById('channelResult').innerText = `📡 Frequency: ${freq} MHz`;
             } catch (e) {
-                document.getElementById('channelResult').innerText = `❌ 오류: ${e.message}`;
+                document.getElementById('channelResult').innerText = `❌ Error: ${e.message}`;
             }
         }
 
