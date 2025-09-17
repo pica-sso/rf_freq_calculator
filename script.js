@@ -1,4 +1,3 @@
-// 주파수 계산 (BT & WiFi → Frequency)
 function calculateFreq(testType, band, channel, standard = null) {
   let freq = -1;
   let bw = standard !== "BLE" ? 1 : 2;
@@ -34,7 +33,6 @@ function calculateFreq(testType, band, channel, standard = null) {
   return freq;
 }
 
-// 밴드/채널 계산 (BT → Band/Channel)
 function calculateBandCh(testType, freq, standard = null) {
   let band = -1;
   let ch = -1;
@@ -79,3 +77,93 @@ function calculateBandCh(testType, freq, standard = null) {
 
   return { band, ch };
 }
+
+function calculateFromFreq() {
+  const testType = document.getElementById("testTypeSelect").value;
+  const standard = document.getElementById("standardSelect").value;
+  const freqStr = document.getElementById("freqInput").value;
+
+  if (!freqStr) {
+    document.getElementById("freqResult").innerText =
+      "❌ Please enter a frequency.";
+    return;
+  }
+
+  const freq = parseInt(freqStr);
+  if (isNaN(freq)) {
+    document.getElementById("freqResult").innerText =
+      "❌ Please enter a valid number.";
+    return;
+  }
+
+  try {
+    const { band, ch } = calculateBandCh(testType, freq, standard);
+    if (band === -1 || ch === -1) {
+      document.getElementById(
+        "freqResult"
+      ).innerText = `❌ Please enter a valid frequency.`;
+    } else {
+      document.getElementById(
+        "freqResult"
+      ).innerText = `📶 Band: ${band}, Channel: ${ch}`;
+    }
+  } catch (e) {
+    document.getElementById("freqResult").innerText = `❌ Error: ${e.message}`;
+  }
+}
+
+function calculateFromChannel() {
+  const testType = document.getElementById("testTypeSelect2").value;
+  const standard = document.getElementById("standardSelect2").value;
+  const band = document.getElementById("bandInput").value.trim();
+  const chStr = document.getElementById("channelInput").value;
+
+  if (!band) {
+    document.getElementById("channelResult").innerText =
+      "❌ Please enter a band.";
+    return;
+  }
+  if (!chStr) {
+    document.getElementById("channelResult").innerText =
+      "❌ Please enter a channel.";
+    return;
+  }
+
+  const ch = parseInt(chStr);
+  if (isNaN(ch)) {
+    document.getElementById("channelResult").innerText =
+      "❌ Please enter a valid channel number.";
+    return;
+  }
+
+  try {
+    const freq = calculateFreq(testType, band, ch, standard);
+    document.getElementById(
+      "channelResult"
+    ).innerText = `📡 Frequency: ${freq} MHz`;
+  } catch (e) {
+    document.getElementById(
+      "channelResult"
+    ).innerText = `❌ Error: ${e.message}`;
+  }
+}
+
+document.getElementById("freqInput").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    calculateFromFreq();
+  }
+});
+
+document.getElementById("bandInput").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    calculateFromChannel();
+  }
+});
+
+document
+  .getElementById("channelInput")
+  .addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      calculateFromChannel();
+    }
+  });

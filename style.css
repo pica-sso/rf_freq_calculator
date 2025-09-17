@@ -6,29 +6,60 @@ body {
   background-color: #f8f8f8;
 }
 
-h1 {
-  color: #333;
-}
-
 section {
+  margin-bottom: 40px;
+  max-width: 480px;
   background: white;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+h2 {
+  font: sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  align-items: center;
+  gap: 10px 15px;
+  margin-bottom: 10px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
 input,
-select,
-button {
+select {
+  padding: 6px 8px;
   font-size: 1em;
+  width: 100%;
+  max-width: 200px;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+}
+
+button {
+  padding: 7px 14px;
+  font-size: 1em;
+  cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 6px 12px;
 }
 
 .result {
-  margin-top: 10px;
+  margin-top: 15px;
   font-weight: bold;
-  color: #0a3;
+  min-height: 1.2em;
 }
