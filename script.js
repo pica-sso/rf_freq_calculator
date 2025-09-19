@@ -160,6 +160,42 @@ document.getElementById("bandInput").addEventListener("keydown", function (e) {
   }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const testTypeSelect = document.getElementById("testTypeSelect");
+  const standardSelect = document.getElementById("standardSelect");
+
+  function updateStandardSelect() {
+    if (testTypeSelect.value === "wifi") {
+      standardSelect.value = "WIFI";
+      standardSelect.disabled = true;
+    } else {
+      standardSelect.value = "DH5";
+      standardSelect.disabled = false;
+    }
+  }
+
+  testTypeSelect.addEventListener("change", updateStandardSelect);
+  updateStandardSelect();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const testTypeSelect2 = document.getElementById("testTypeSelect2");
+  const standardSelect2 = document.getElementById("standardSelect2");
+
+  function updateStandardSelect2() {
+    if (testTypeSelect2.value === "wifi") {
+      standardSelect2.value = "WIFI";
+      standardSelect2.disabled = true;
+    } else {
+      standardSelect2.value = "DH5";
+      standardSelect2.disabled = false;
+    }
+  }
+
+  testTypeSelect2.addEventListener("change", updateStandardSelect2);
+  updateStandardSelect2();
+});
+
 document
   .getElementById("channelInput")
   .addEventListener("keydown", function (e) {
