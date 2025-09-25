@@ -1,5 +1,7 @@
 # 📡 RF Frequency ↔ Band/Channel Calculator
 
+**Link**: http://freqcal.kro.kr/
+
 A simple, web-based calculator for converting between RF frequency (MHz) and band/channel numbers, focused on Bluetooth (BT) and Wifi.
 
 ---
@@ -37,6 +39,39 @@ These messages help guide you to enter correct values and understand the calcula
 
 ---
 
+## 📋 Supported Bands & Channels
+
+### Bluetooth (BT)
+
+| Standard | Band | Channel Range | Frequency Range (MHz) |
+| -------- | ---- | ------------- | --------------------- |
+| DH5      | 0    | 0 ~ 78        | 2402 ~ 2480           |
+| BLE      | 0    | 0 ~ 39        | 2402 ~ 2480           |
+| DH5      | 1    | 0 ~ 100       | 5150 ~ 5250           |
+| BLE      | 1    | 0 ~ 50        | 5150 ~ 5250           |
+| DH5      | 2    | 0 ~ 125       | 5725 ~ 5850           |
+| BLE      | 2    | 0 ~ 62        | 5725 ~ 5850           |
+| DH5      | 4    | 0 ~ 125       | 5925 ~ 6050           |
+| BLE      | 4    | 0 ~ 62        | 5925 ~ 6050           |
+| DH5      | 5    | 0 ~ 124       | 6051 ~ 6175           |
+| BLE      | 5    | 0 ~ 62        | 6051 ~ 6175           |
+| DH5      | 6    | 0 ~ 124       | 6176 ~ 6300           |
+| BLE      | 6    | 0 ~ 62        | 6176 ~ 6300           |
+| DH5      | 7    | 0 ~ 124       | 6301 ~ 6425           |
+| BLE      | 7    | 0 ~ 62        | 6301 ~ 6425           |
+
+### WiFi
+
+| Band    | Channel Range | Frequency Range (MHz) |
+| ------- | ------------- | --------------------- |
+| 2.4 GHz | 1 ~ 15        | 2412 ~ 2484           |
+| 5 GHz   | 0 ~ 180       | 5000 ~ 5900           |
+| 6 GHz   | 0 ~ 220       | 5950 ~ 7050           |
+
+> Table info may differ by implementation or standard.
+
+---
+
 ## 🗂️ Project Structure
 
 ```
@@ -52,5 +87,11 @@ CNAME           # (Optional) Custom domain for GitHub Pages
 
 - **Frequency → Band/Channel:**  
   Enter `2441` MHz (Bluetooth, DH5) → Band: `0`, Channel: `39`
+  ![freqtobandcal](./img/freq_to_b_ch.png)
 - **Band/Channel → Frequency:**  
-  Enter Band: `0`, Channel: `39` (Bluetooth, DH5) → Frequency: `2441` MHz
+   Enter Band: `0`, Channel: `39` (Bluetooth, DH5) → Frequency: `2441` MHz
+  ![bandcaltofreq](./img/b_ch_to_freq.png)
+- Invalid value
+  ![invalidvalue](./img/invalid_freq.png)
+- Empty value
+  ![emptyvalue](./img/empty_freq.png)
