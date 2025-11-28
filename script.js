@@ -203,3 +203,21 @@ document
       calculateFromChannel();
     }
   });
+
+// Load app version from version.json and show in UI
+function loadAppVersion() {
+  fetch("version.json")
+    .then(function (res) {
+      if (!res.ok) throw new Error("Network response was not ok");
+      return res.json();
+    })
+    .then(function (data) {
+      var el = document.getElementById("appVersion");
+      if (el && data && data.version) el.innerText = "v" + data.version;
+    })
+    .catch(function () {
+      // ignore errors silently
+    });
+}
+
+document.addEventListener("DOMContentLoaded", loadAppVersion);
