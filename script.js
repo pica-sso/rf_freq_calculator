@@ -116,7 +116,7 @@ function calculateFromChannel() {
   const testType = document.getElementById("testTypeSelect2").value;
   const standard = document.getElementById("standardSelect2").value;
   const band = document.getElementById("bandInput").value.trim();
-  const chStr = document.getElementById("channelInput").value;
+  const chStr = document.getElementById("channelInput").value.trim();
 
   if (!band) {
     document.getElementById("channelResult").innerText =
@@ -129,18 +129,34 @@ function calculateFromChannel() {
     return;
   }
 
-  const ch = parseInt(chStr);
-  if (isNaN(ch)) {
+  // Parse multiple channels separated by commas
+  const channels = chStr
+    .split(",")
+    .map((ch) => ch.trim())
+    .filter((ch) => ch !== "");
+
+  if (channels.length === 0) {
     document.getElementById("channelResult").innerText =
       "❌ Please enter a valid channel number.";
     return;
   }
 
   try {
-    const freq = calculateFreq(testType, band, ch, standard);
+    const results = [];
+    for (const ch of channels) {
+      const chNum = parseInt(ch);
+      if (isNaN(chNum)) {
+        document.getElementById(
+          "channelResult"
+        ).innerText = `❌ Please enter valid channel numbers. '${ch}' is not a valid number.`;
+        return;
+      }
+      const freq = calculateFreq(testType, band, chNum, standard);
+      results.push(`${freq}`);
+    }
     document.getElementById(
       "channelResult"
-    ).innerText = `📡 Frequency: ${freq} MHz`;
+    ).innerText = `📡 Frequency: ${results.join(", ")} MHz`;
   } catch (e) {
     document.getElementById(
       "channelResult"
