@@ -9,10 +9,11 @@ A simple, web-based calculator for converting between RF frequency (MHz) and ban
 ## ✨ Features
 
 - 🔄 **Frequency → Band/Channel:**  
-  Enter a frequency in MHz to get the corresponding band and channel.
+  Enter one or more frequencies (comma-separated) in MHz to get the corresponding band and channel.
 - 🔄 **Band/Channel → Frequency:**  
-  Enter a band and channel to get the corresponding frequency in MHz.
+  Enter a band and one or more channels (comma-separated) to get the corresponding frequency in MHz.
 - 📶 Supports Bluetooth (BT) and Wifi.
+- ✅ Multiple value support with clean, line-by-line output.
 
 ---
 
@@ -85,12 +86,23 @@ CNAME           # (Optional) Custom domain for GitHub Pages
 
 ## 📝 Example
 
-- **Frequency → Band/Channel:**  
+- **Frequency → Band/Channel (Single):**  
   Enter `2441` MHz (Bluetooth, DH5) → Band: `0`, Channel: `39`
-  ![freqtobandcal](./img/freq_to_b_ch.png)
-- **Band/Channel → Frequency:**  
-   Enter Band: `0`, Channel: `39` (Bluetooth, DH5) → Frequency: `2441` MHz
-  ![bandcaltofreq](./img/b_ch_to_freq.png)
+
+- **Frequency → Band/Channel (Multiple):**  
+  Enter `2440, 2480, 5150` MHz (Bluetooth, DH5) →
+  ```
+  2440MHz → Band: 0, Ch: 19
+  2480MHz → Band: 0, Ch: 39
+  5150MHz → Band: 1, Ch: 0
+  ```
+
+- **Band/Channel → Frequency (Multiple):**  
+  Enter Band: `0`, Channels: `0,19,39` (Bluetooth, DH5) → 
+  ```
+  Frequency: 2402, 2440, 2480 MHz
+  ```
+
 - Invalid value
   ![invalidvalue](./img/invalid_freq.png)
 - Empty value
