@@ -81,7 +81,7 @@ function calculateBandCh(testType, freq, standard = null) {
 function calculateFromFreq() {
   const testType = document.getElementById("testTypeSelect").value;
   const standard = document.getElementById("standardSelect").value;
-  const freqStr = document.getElementById("freqInput").value;
+  const freqStr = document.getElementById("freqInput").value.trim();
 
   if (!freqStr) {
     document.getElementById("freqResult").innerText =
@@ -89,24 +89,40 @@ function calculateFromFreq() {
     return;
   }
 
-  const freq = parseInt(freqStr);
-  if (isNaN(freq)) {
+  // Parse multiple frequencies separated by commas
+  const frequencies = freqStr
+    .split(",")
+    .map((f) => f.trim())
+    .filter((f) => f !== "");
+
+  if (frequencies.length === 0) {
     document.getElementById("freqResult").innerText =
-      "❌ Please enter a valid number.";
+      "❌ Please enter a valid frequency number.";
     return;
   }
 
   try {
-    const { band, ch } = calculateBandCh(testType, freq, standard);
-    if (band === -1 || ch === -1) {
-      document.getElementById(
-        "freqResult"
-      ).innerText = `❌ Please enter a valid frequency.`;
-    } else {
-      document.getElementById(
-        "freqResult"
-      ).innerText = `📶 Band: ${band}, Channel: ${ch}`;
+    const results = [];
+    for (const freqValue of frequencies) {
+      const freq = parseInt(freqValue);
+      if (isNaN(freq)) {
+        document.getElementById(
+          "freqResult"
+        ).innerText = `❌ Please enter valid frequency numbers. '${freqValue}' is not a valid number.`;
+        return;
+      }
+      const { band, ch } = calculateBandCh(testType, freq, standard);
+      if (band === -1 || ch === -1) {
+        document.getElementById(
+          "freqResult"
+        ).innerText = `❌ '${freq}' is not a valid frequency.`;
+        return;
+      }
+      results.push(`${freq}MHz → Band: ${band}, Ch: ${ch}`);
     }
+    document.getElementById(
+      "freqResult"
+    ).innerHTML = `📶 ${results.join("<br>")}`;
   } catch (e) {
     document.getElementById("freqResult").innerText = `❌ Error: ${e.message}`;
   }
