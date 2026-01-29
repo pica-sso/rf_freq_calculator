@@ -56,9 +56,9 @@ button {
   margin-top: 8px;
   margin-bottom: 8px;
   margin-left: 0;
-  background-color: #6c757d;
-  color: white;
-  border: none;
+  background-color: white;
+  color: black;
+  border: 1px solid gray;
   border-radius: 6px;
   font-weight: 500;
   transition: all 0.3s ease;
@@ -66,7 +66,8 @@ button {
 }
 
 button:hover {
-  background-color: #5a6268;
+  background-color: white;
+  border: 1px solid #6c757d;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
