@@ -118,11 +118,16 @@ function calculateFromFreq() {
         ).innerText = `❌ '${freq}' is not a valid frequency.`;
         return;
       }
-      results.push(`${freq}MHz → Band: ${band}, Ch: ${ch}`);
+      results.push({ freq, band, ch });
     }
+    let tableHTML = '📶<table class="result-table"><thead><tr><th>Frequency (MHz)</th><th>Band</th><th>Channel</th></tr></thead><tbody>';
+    for (const result of results) {
+      tableHTML += `<tr><td>${result.freq}</td><td>${result.band}</td><td>${result.ch}</td></tr>`;
+    }
+    tableHTML += '</tbody></table>';
     document.getElementById(
       "freqResult"
-    ).innerHTML = `📶 ${results.join("<br>")}`;
+    ).innerHTML = tableHTML;
   } catch (e) {
     document.getElementById("freqResult").innerText = `❌ Error: ${e.message}`;
   }
@@ -182,12 +187,17 @@ function calculateFromChannel() {
           return;
         }
         const freq = calculateFreq(testType, bandNum, chNum, standard);
-        results.push(`Band: ${bandNum}, Ch: ${chNum} → ${freq} MHz`);
+        results.push({ band: bandNum, channel: chNum, freq });
       }
     }
+    let tableHTML = '📡<table class="result-table"><thead><tr><th>Band</th><th>Channel</th><th>Frequency (MHz)</th></tr></thead><tbody>';
+    for (const result of results) {
+      tableHTML += `<tr><td>${result.band}</td><td>${result.channel}</td><td>${result.freq}</td></tr>`;
+    }
+    tableHTML += '</tbody></table>';
     document.getElementById(
       "channelResult"
-    ).innerHTML = `📡 ${results.join("<br>")}`;
+    ).innerHTML = tableHTML;
   } catch (e) {
     document.getElementById(
       "channelResult"
