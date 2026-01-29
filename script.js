@@ -131,10 +131,10 @@ function calculateFromFreq() {
 function calculateFromChannel() {
   const testType = document.getElementById("testTypeSelect2").value;
   const standard = document.getElementById("standardSelect2").value;
-  const band = document.getElementById("bandInput").value.trim();
+  const bandStr = document.getElementById("bandInput").value.trim();
   const chStr = document.getElementById("channelInput").value.trim();
 
-  if (!band) {
+  if (!bandStr) {
     document.getElementById("channelResult").innerText =
       "❌ Please enter a band.";
     return;
@@ -145,11 +145,23 @@ function calculateFromChannel() {
     return;
   }
 
+  // Parse multiple bands separated by commas
+  const bands = bandStr
+    .split(",")
+    .map((b) => b.trim())
+    .filter((b) => b !== "");
+
   // Parse multiple channels separated by commas
   const channels = chStr
     .split(",")
     .map((ch) => ch.trim())
     .filter((ch) => ch !== "");
+
+  if (bands.length === 0) {
+    document.getElementById("channelResult").innerText =
+      "❌ Please enter a valid band number.";
+    return;
+  }
 
   if (channels.length === 0) {
     document.getElementById("channelResult").innerText =
@@ -159,20 +171,23 @@ function calculateFromChannel() {
 
   try {
     const results = [];
-    for (const ch of channels) {
-      const chNum = parseInt(ch);
-      if (isNaN(chNum)) {
-        document.getElementById(
-          "channelResult"
-        ).innerText = `❌ Please enter valid channel numbers. '${ch}' is not a valid number.`;
-        return;
+    for (const b of bands) {
+      const bandNum = isNaN(parseInt(b)) ? b : parseInt(b);
+      for (const ch of channels) {
+        const chNum = parseInt(ch);
+        if (isNaN(chNum)) {
+          document.getElementById(
+            "channelResult"
+          ).innerText = `❌ Please enter valid channel numbers. '${ch}' is not a valid number.`;
+          return;
+        }
+        const freq = calculateFreq(testType, bandNum, chNum, standard);
+        results.push(`Band: ${bandNum}, Ch: ${chNum} → ${freq} MHz`);
       }
-      const freq = calculateFreq(testType, band, chNum, standard);
-      results.push(`${freq}`);
     }
     document.getElementById(
       "channelResult"
-    ).innerText = `📡 Frequency: ${results.join(", ")} MHz`;
+    ).innerHTML = `📡 ${results.join("<br>")}`;
   } catch (e) {
     document.getElementById(
       "channelResult"
